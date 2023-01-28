@@ -1,6 +1,6 @@
 # A minimalist typing practice app
 
-A React application that allows you to practice typing in a distraction-free and minimalist environment.
+A React application that allows you to practice typing in a distraction-free and minimalist environment. This application was scaffolded using [create-react-app](https://github.com/facebook/create-react-app).
 
 - [Available Scripts](#available-scripts)
   - [`npm start`](#npm-start)
