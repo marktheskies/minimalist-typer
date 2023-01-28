@@ -26,6 +26,10 @@ body {
   white-space: pre-wrap;
 }
 
+.App footer button {
+  cursor: pointer;
+}
+
 .workspace {
   font-family: "Ubuntu Mono", monospace;
   max-width: 35rem;

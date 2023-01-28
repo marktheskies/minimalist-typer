@@ -30,8 +30,7 @@ const App = () => {
   const [wpm, setWpm] = useState(0);
   const [finished, setFinished] = useState(false);
 
-  // Grab a random quote on first render
-  useEffect(() => {
+  const setQuoteToRandomQuote = () => {
     const i = Math.floor(Math.random() * (quotes.length - 1));
     const quote = quotes[i];
     setPassage(
@@ -45,6 +44,11 @@ const App = () => {
       length: quote.length,
       tags: quote.tags,
     });
+  };
+
+  // Grab a random quote on first render
+  useEffect(() => {
+    setQuoteToRandomQuote();
   }, []);
 
   const keydownHandler = ({ key, repeat, altKey, ctrlKey, metaKey }) => {
@@ -128,6 +132,10 @@ const App = () => {
     };
   }, [timerIsRunning]);
 
+  const newQuoteClickHandler = () => {
+    setQuoteToRandomQuote();
+  };
+
   return (
     <div className="App">
       <div className="workspace">
@@ -151,6 +159,11 @@ const App = () => {
       <footer>
         <div className="left">
           <p>Author: {passageMeta.author}</p>
+          <p>
+            <button className="button" onClick={newQuoteClickHandler}>
+              New quote →
+            </button>
+          </p>
         </div>
         <div className="right">
           <p>Accuracy: {percentageFormat.format(accuracy).padStart(7)}</p>
