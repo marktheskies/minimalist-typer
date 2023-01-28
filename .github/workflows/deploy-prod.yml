@@ -21,11 +21,11 @@ jobs:
         run: |
           tar \
             --dereference --hard-dereference \
-            --directory "$INPUT_PATH" \
+            --directory "build/" \
             -cvf "$RUNNER_TEMP/artifact.tar" \
             --exclude=.git \
             --exclude=.github \
-            build/
+            .
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
