@@ -1,11 +1,11 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import sample from "./passage";
+import quotes from "./quotes";
 import { percentageFormat, wpmFormat } from "./localization";
 
 const Letter = ({ char, status }) => {
-  return <span className={status}>{char}</span>;
+  return <span className={`Letter ${status}`}>{char}</span>;
 };
 
 Letter.propTypes = {
@@ -14,9 +14,13 @@ Letter.propTypes = {
 };
 
 const App = () => {
-  const [passage, setPassage] = useState(
-    sample.split("").map((character) => ({ expected: character, actual: "" }))
-  );
+  const [passage, setPassage] = useState([]);
+  const [passageMeta, setPassageMeta] = useState({
+    author: "",
+    authorSlug: "",
+    length: 0,
+    tags: [],
+  });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [numKeyPresses, setNumKeyPresses] = useState(0);
   const [numCorrectKeyPresses, setNumCorrectKeyPresses] = useState(0);
@@ -25,6 +29,23 @@ const App = () => {
   const [seconds, setSeconds] = useState(0);
   const [wpm, setWpm] = useState(0);
   const [finished, setFinished] = useState(false);
+
+  // Grab a random quote on first render
+  useEffect(() => {
+    const i = Math.floor(Math.random() * (quotes.length - 1));
+    const quote = quotes[i];
+    setPassage(
+      quote.content
+        .split("")
+        .map((character) => ({ expected: character, actual: "" }))
+    );
+    setPassageMeta({
+      author: quote.author,
+      authorSlug: quote.authorSlug,
+      length: quote.length,
+      tags: quote.tags,
+    });
+  }, []);
 
   const keydownHandler = ({ key, repeat, altKey, ctrlKey, metaKey }) => {
     // Bail out if we are done with the passage
@@ -128,8 +149,13 @@ const App = () => {
       </div>
 
       <footer>
-        <p>Accuracy: {percentageFormat.format(accuracy).padStart(7)}</p>
-        <p>WPM: {wpmFormat.format(wpm).padStart(7)}</p>
+        <div className="left">
+          <p>Author: {passageMeta.author}</p>
+        </div>
+        <div className="right">
+          <p>Accuracy: {percentageFormat.format(accuracy).padStart(7)}</p>
+          <p>WPM: {wpmFormat.format(wpm).padStart(7)}</p>
+        </div>
       </footer>
     </div>
   );

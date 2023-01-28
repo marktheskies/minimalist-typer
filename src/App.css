@@ -15,11 +15,14 @@ body {
   padding: 3em 0;
   font-size: 0.75em;
   max-width: 35rem;
+
+  display: flex;
+  justify-content: space-between;
 }
 
-.App footer {
+.App footer .right {
   text-align: right;
-  align-self: flex-end;
+  /* align-self: flex-end; */
   white-space: pre-wrap;
 }
 
@@ -30,15 +33,15 @@ body {
   color: rgb(166, 166, 166);
 }
 
-.workspace .correct {
+.Letter.correct {
   color: rgb(30, 30, 30);
 }
 
-.workspace .incorrect {
+.Letter.incorrect {
   color: white;
   background-color: rgb(141, 0, 0);
 }
 
-.workspace .current {
+.Letter.current {
   border-bottom: 2px solid;
 }
