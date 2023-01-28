@@ -17,20 +17,19 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Create artifact
-        run: |
-          tar \
-            --dereference --hard-dereference \
-            --directory "build/" \
-            -cvf "$RUNNER_TEMP/artifact.tar" \
-            --exclude=.git \
-            --exclude=.github \
-            .
+#       - name: Create artifact
+#         run: |
+#           tar \
+#             --dereference --hard-dereference \
+#             --directory "build/" \
+#             -cvf "$RUNNER_TEMP/artifact.tar" \
+#             --exclude=.git \
+#             --exclude=.github \
+#             .
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          name: github-pages
-          path: ${{ runner.temp }}/artifact.tar
+          path: build/
         
   deploy:
     needs: build
