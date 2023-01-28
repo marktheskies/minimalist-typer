@@ -2,7 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import sample from "./passage";
-import { percentageFormat } from "./localization";
+import { percentageFormat, wpmFormat } from "./localization";
 
 const Letter = ({ char, status }) => {
   return <span className={status}>{char}</span>;
@@ -21,6 +21,9 @@ const App = () => {
   const [numKeyPresses, setNumKeyPresses] = useState(0);
   const [numCorrectKeyPresses, setNumCorrectKeyPresses] = useState(0);
   const [accuracy, setAccuracy] = useState(0);
+  const [timerIsRunning, setTimerIsRunning] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [wpm, setWpm] = useState(0);
 
   const keydownHandler = ({ key, repeat, altKey, ctrlKey, metaKey }) => {
     // Bail out if any key was pressed that we do not care about
@@ -28,6 +31,7 @@ const App = () => {
 
     // Bail out if we are at the end
     if (currentIndex >= passage.length - 1) {
+      setTimerIsRunning(false);
       console.log("You're done");
       return;
     }
@@ -44,6 +48,11 @@ const App = () => {
       setPassage(newPassage);
       setCurrentIndex((prevIndex) => prevIndex - 1);
       return;
+    }
+
+    // If the timer isn't already running, start it
+    if (!timerIsRunning) {
+      setTimerIsRunning(true);
     }
 
     // Go to the next character if the key is not being held down from the previous
@@ -69,11 +78,31 @@ const App = () => {
     };
   });
 
-  // Calculate accuracy whenever numKeyPresses or numCorrectKeyPresses is updated
+  // Calculate accuracy and WPM whenever numKeyPresses or numCorrectKeyPresses is updated
   useEffect(() => {
-    if (numKeyPresses === 0) setAccuracy(0);
-    else setAccuracy(numCorrectKeyPresses / numKeyPresses);
-  }, [numKeyPresses, numCorrectKeyPresses]);
+    if (numKeyPresses === 0) {
+      setAccuracy(0);
+      setWpm(0);
+    } else {
+      setAccuracy(numCorrectKeyPresses / numKeyPresses);
+      setWpm(numCorrectKeyPresses / 5 / (seconds / 60));
+    }
+  }, [numKeyPresses, numCorrectKeyPresses, seconds]);
+
+  // Handle the timer
+  useEffect(() => {
+    let interval = undefined;
+    if (timerIsRunning) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds + 1);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [timerIsRunning]);
 
   return (
     <div className="App">
@@ -95,7 +124,10 @@ const App = () => {
         ))}
       </div>
 
-      <footer>Accuracy: {percentageFormat.format(accuracy)}</footer>
+      <footer>
+        <p>Accuracy: {percentageFormat.format(accuracy).padStart(7)}</p>
+        <p>WPM: {wpmFormat.format(wpm).padStart(7)}</p>
+      </footer>
     </div>
   );
 };

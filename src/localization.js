@@ -4,4 +4,8 @@ const percentageFormat = new Intl.NumberFormat(window.navigator.language, {
   minimumFractionDigits: 2,
 });
 
-module.exports = { percentageFormat };
+const wpmFormat = new Intl.NumberFormat(window.navigator.language, {
+  maximumFractionDigits: 0,
+});
+
+module.exports = { percentageFormat, wpmFormat };
