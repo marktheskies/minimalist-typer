@@ -24,17 +24,14 @@ const App = () => {
   const [timerIsRunning, setTimerIsRunning] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [wpm, setWpm] = useState(0);
+  const [finished, setFinished] = useState(false);
 
   const keydownHandler = ({ key, repeat, altKey, ctrlKey, metaKey }) => {
+    // Bail out if we are done with the passage
+    if (finished) return;
+
     // Bail out if any key was pressed that we do not care about
     if (altKey || ctrlKey || metaKey || key === "Shift") return;
-
-    // Bail out if we are at the end
-    if (currentIndex >= passage.length - 1) {
-      setTimerIsRunning(false);
-      console.log("You're done");
-      return;
-    }
 
     // Bail out if backspace was pressed at the start
     if (key === "Backspace" && currentIndex <= 0) {
@@ -66,6 +63,12 @@ const App = () => {
       newPassage[currentIndex].actual = key;
       setPassage(newPassage);
       setCurrentIndex((prevIndex) => prevIndex + 1);
+
+      // Bail out if we are at the end
+      if (currentIndex >= passage.length - 1) {
+        setTimerIsRunning(false);
+        setFinished(true);
+      }
     }
   };
 
