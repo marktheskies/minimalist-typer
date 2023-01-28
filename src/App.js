@@ -44,6 +44,16 @@ const App = () => {
       length: quote.length,
       tags: quote.tags,
     });
+
+    // Hard reset
+    setCurrentIndex(0);
+    setNumKeyPresses(0);
+    setNumCorrectKeyPresses(0);
+    setAccuracy(0);
+    setTimerIsRunning(false);
+    setSeconds(0);
+    setWpm(0);
+    setFinished(false);
   };
 
   // Grab a random quote on first render
