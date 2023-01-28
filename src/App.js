@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import sample from "./passage";
+import { percentageFormat } from "./localization";
 
 const Letter = ({ char, status }) => {
   return <span className={status}>{char}</span>;
@@ -17,6 +18,9 @@ const App = () => {
     sample.split("").map((character) => ({ expected: character, actual: "" }))
   );
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [numKeyPresses, setNumKeyPresses] = useState(0);
+  const [numCorrectKeyPresses, setNumCorrectKeyPresses] = useState(0);
+  const [accuracy, setAccuracy] = useState(0);
 
   const keydownHandler = ({ key, repeat, altKey, ctrlKey, metaKey }) => {
     // Bail out if any key was pressed that we do not care about
@@ -44,6 +48,11 @@ const App = () => {
 
     // Go to the next character if the key is not being held down from the previous
     if (!repeat) {
+      setNumKeyPresses(numKeyPresses + 1);
+      if (passage[currentIndex].expected === key) {
+        setNumCorrectKeyPresses(numCorrectKeyPresses + 1);
+      }
+
       const newPassage = [...passage];
       newPassage[currentIndex].actual = key;
       setPassage(newPassage);
@@ -59,6 +68,12 @@ const App = () => {
       window.removeEventListener("keydown", keydownHandler);
     };
   });
+
+  // Calculate accuracy whenever numKeyPresses or numCorrectKeyPresses is updated
+  useEffect(() => {
+    if (numKeyPresses === 0) setAccuracy(0);
+    else setAccuracy(numCorrectKeyPresses / numKeyPresses);
+  }, [numKeyPresses, numCorrectKeyPresses]);
 
   return (
     <div className="App">
@@ -79,6 +94,8 @@ const App = () => {
           />
         ))}
       </div>
+
+      <footer>Accuracy: {percentageFormat.format(accuracy)}</footer>
     </div>
   );
 };
