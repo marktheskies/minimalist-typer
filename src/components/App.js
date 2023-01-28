@@ -1,19 +1,17 @@
-import "./App.css";
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import quotes from "./quotes";
-import { percentageFormat, wpmFormat } from "./localization";
+import styled from "styled-components";
+import StyledLetter from "./Letter";
+import StyledFooter from "./Footer";
+import quotes from "../utils/quotes";
 
-const Letter = ({ char, status }) => {
-  return <span className={`Letter ${status}`}>{char}</span>;
-};
+const StyledWorkspace = styled.main`
+  width: 100%;
+  max-width: ${(props) => props.theme.maxAppWidth};
+  font-size: 1.35em;
+  text-align: justify;
+`;
 
-Letter.propTypes = {
-  status: PropTypes.oneOf(["current", "", "correct", "incorrect"]),
-  char: PropTypes.string,
-};
-
-const App = () => {
+const App = ({ className }) => {
   const [passage, setPassage] = useState([]);
   const [passageMeta, setPassageMeta] = useState({
     author: "",
@@ -149,10 +147,10 @@ const App = () => {
   };
 
   return (
-    <div className="App">
-      <div className="workspace">
+    <div className={className}>
+      <StyledWorkspace>
         {passage.map((char, i) => (
-          <Letter
+          <StyledLetter
             key={i}
             status={
               i === currentIndex
@@ -163,27 +161,31 @@ const App = () => {
                 ? ""
                 : "incorrect"
             }
-            char={char.expected}
-          />
+          >
+            {char.expected}
+          </StyledLetter>
         ))}
-      </div>
+      </StyledWorkspace>
 
-      <footer>
-        <div className="left">
-          <p>Author: {passageMeta.author}</p>
-          <p>
-            <button className="button" onClick={newQuoteClickHandler}>
-              New quote →
-            </button>
-          </p>
-        </div>
-        <div className="right">
-          <p>Accuracy: {percentageFormat.format(accuracy).padStart(7)}</p>
-          <p>WPM: {wpmFormat.format(wpm).padStart(7)}</p>
-        </div>
-      </footer>
+      <StyledFooter
+        author={passageMeta.author}
+        newQuoteClickHandler={newQuoteClickHandler}
+        accuracy={accuracy}
+        wpm={wpm}
+      />
     </div>
   );
 };
 
-export default App;
+const StyledApp = styled(App)`
+  font-family: ${(props) => props.theme.fontFamily};
+  font-size: ${(props) => props.theme.fontSizeBase};
+  line-height: ${(props) => props.theme.lineHeightBase};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+export default StyledApp;
