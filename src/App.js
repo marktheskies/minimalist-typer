@@ -142,7 +142,8 @@ const App = () => {
     };
   }, [timerIsRunning]);
 
-  const newQuoteClickHandler = () => {
+  const newQuoteClickHandler = (event) => {
+    event.target.blur();
     setQuoteToRandomQuote();
   };
 
