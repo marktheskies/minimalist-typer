@@ -20,9 +20,12 @@ body {
   justify-content: space-between;
 }
 
+.App footer {
+  color: rgb(127, 127, 127);
+}
+
 .App footer .right {
   text-align: right;
-  /* align-self: flex-end; */
   white-space: pre-wrap;
 }
 
