@@ -16,6 +16,11 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
+const StyledHelpButton = styled.abbr`
+  cursor: pointer;
+  padding-left: 1em;
+`;
+
 const Footer = ({ className, author, newQuoteClickHandler, accuracy, wpm }) => (
   <footer className={className}>
     <StyledLeft>
@@ -24,6 +29,9 @@ const Footer = ({ className, author, newQuoteClickHandler, accuracy, wpm }) => (
         <StyledButton className="button" onClick={newQuoteClickHandler}>
           New quote →
         </StyledButton>
+        <StyledHelpButton title="Accuracy and WPM will be measured after you start typing. If you would like to to type a different quote, or if you are finished with the current one, click the 'New quote' button.">
+          ?
+        </StyledHelpButton>
       </div>
     </StyledLeft>
     <StyledRight>
