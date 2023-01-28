@@ -200,7 +200,7 @@ const passages = [
   {
     _id: "lxVMQLtBP7",
     content:
-      "First we thought the PC was a calculator. Then we found out how to turn numbers into letters with ASCII — and we thought it was a typewriter. Then we discovered graphics, and we thought it was a television. With the World Wide Web, we've realized it's a brochure.",
+      "First we thought the PC was a calculator. Then we found out how to turn numbers into letters with ASCII, and we thought it was a typewriter. Then we discovered graphics, and we thought it was a television. With the World Wide Web, we've realized it's a brochure.",
     author: "Douglas Adams",
     tags: ["technology"],
     authorSlug: "douglas-adams",
@@ -255,7 +255,7 @@ const passages = [
   {
     _id: "APsci40ULi",
     content:
-      "Technology frightens me to death. It's designed by engineers to impress other engineers. And they always come with instruction booklets that are written by engineers for other engineers — which is why almost no technology ever works.",
+      "Technology frightens me to death. It's designed by engineers to impress other engineers. And they always come with instruction booklets that are written by engineers for other engineers, which is why almost no technology ever works.",
     author: "John Cleese",
     tags: ["technology"],
     authorSlug: "john-cleese",
@@ -486,7 +486,7 @@ const passages = [
   {
     _id: "IXdonGCMtzt_",
     content:
-      "It is impossible to escape the impression that people commonly use false standards of measurement — that they seek power, success and wealth for themselves and admire them in others, and that they underestimate what is of true value in life.",
+      "It is impossible to escape the impression that people commonly use false standards of measurement, that they seek power, success and wealth for themselves and admire them in others, and that they underestimate what is of true value in life.",
     author: "Sigmund Freud",
     tags: ["success"],
     authorSlug: "sigmund-freud",
