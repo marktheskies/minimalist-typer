@@ -66,7 +66,8 @@ const App = () => {
     if (finished) return;
 
     // Bail out if any key was pressed that we do not care about
-    if (altKey || ctrlKey || metaKey || key === "Shift") return;
+    if (altKey || ctrlKey || metaKey || key === "Shift" || key === "Escape")
+      return;
 
     // Bail out if backspace was pressed at the start
     if (key === "Backspace" && currentIndex <= 0) {
