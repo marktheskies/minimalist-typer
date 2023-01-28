@@ -4,6 +4,7 @@ import "normalize.css";
 import StyledApp from "./components/App";
 import { ThemeProvider } from "styled-components";
 import reportWebVitals from "./reportWebVitals";
+import "@fontsource/ubuntu-mono";
 
 const theme = {
   fontFamily: '"Ubuntu Mono", monospace',
